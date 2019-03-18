@@ -1,7 +1,8 @@
 *{
 	box-sizing: border-box;
 	margin: 0;
-	padding: 0
+	padding: 0;
+	font-family: PingFang SC,Lantinghei SC,Droid Sans,Helvetica Neue,Helvetica,Arial,Microsoft YaHei,"\5FAE\8F6F\96C5\9ED1",STHeitiSC-Light,simsun,"\5B8B\4F53",WenQuanYi Zen Hei,WenQuanYi Micro Hei,"sans-serif";
 }
 html, body {
 	height: 100%;
@@ -18,21 +19,81 @@ p {
 	transition:fontSize .5s
 }
 
-.main-screen {
-	display: flex;
-	flex-direction:  column-reverse;
-	align-items: center;
+.text-sections {
+	
+}
+
+.stage {
 	width: 100%;
 	height: 100%;
+	overflow: auto;
+	padding-bottom: 160px;
+
+	
+
+}
+
+/* 设置滚动条的样式 */
+	::-webkit-scrollbar {
+		width: 2px;
+	}
+	/* 滚动槽 */
+	::-webkit-scrollbar-track {
+		-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+		border-radius: 10px;
+	}
+	/* 滚动条滑块 */
+	::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		background: transparent;
+		-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+	}
+	::-webkit-scrollbar-thumb:window-inactive {
+		background: transparent;
+	}
+
+.main-screen {
+	min-height: 100%;
+	overflow: hidden;
+	text-align: center;
+	vertical-align: bottom;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
 
 	.text-sections {
+		display: inline-block;
+		text-align: center
+	}
 
+	.text-sections-content {
+		display: inline-block;
+		text-align: left;
+		transform:rotate(0deg);
+		transition:transform .2s;
+		
+		&.rotate-left {
+			transform:rotate(-90deg);
+			transform-origin: 0 115%;
+		}
+
+		&.rotate-right {
+			transform:rotate(90deg);
+			transform-origin: 100% 100%;
+		}
 	}
 }
 
 .fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+  transition: opacity .2s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+
+.animated-fast {
+    -webkit-animation-duration:.1s;
+    -webkit-animation-fill-mode:both;
+    animation-duration:.1s !important;
+    animation-fill-mode:both
 }

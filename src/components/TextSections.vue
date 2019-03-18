@@ -1,9 +1,9 @@
 <template>
-	<div class="text-sections ">
-		<div v-if="textFormat.length">
+	<div class="text-sections">
+		<div v-if="textFormat.length" class="text-sections-content"  :class="{ 'rotate-left': finish}">
 			
-				<span v-for="(item, index) in textFormat">
-					<transition enter-active-class="animated zoomIn">
+				<span v-for="item in textFormat">
+					<transition enter-active-class="animated-fast zoomIn">
 						<p v-show="item.show" :style="{fontSize: item.size + 'px', color: item.color}">{{ item.content }}</p>
 					</transition>
 				</span>
@@ -13,19 +13,22 @@
 </template>
 <script>
 
+	let _ = require('lodash')
 
 	export default {
 	  name: 'TextSections',
-	  props: ['txt'],
+	  props: ['txt', 'last'],
 	  data () {
-	  	console.log( this.txt )
+	  	console.log( this.last )
 
 	    return {
 	    	textFormat: [],
-	    	pointer: 0
+	    	pointer: 0,
+	    	finish: false
 	    }
 	  },
 	  created(){
+
 	  	this.start()
 	  },
 	  methods: {
@@ -37,7 +40,7 @@
 
 	  				return {
 	  					show: this.pointer >= index,
-		  				size: 28 + Math.ceil(Math.random()*16),
+		  				size: _.random(42, 80),
 		  				color: '#ffffff',
 		  				content: item
 		  			} 
@@ -46,11 +49,26 @@
 
 	  			
 	  			this.pointer++
-	  			console.log(222)
 
-	  			if( this.pointer == this.txt.length ) clearInterval(timer)
+	  			if( this.pointer == this.txt.length ){ 
+	  				clearInterval(timer)
+	
+					if( this.last ) return 
 
-	  		}.bind(this), 1500)
+					this.$emit('update-state', 'done')
+
+  					_.delay(function(){
+
+  						this.finish = true
+
+  					}.bind(this), 2000)
+
+	  	
+	  			}
+
+	  			this.$emit('after-append')
+
+	  		}.bind(this), 1000)
 	  	}
 	  },
 	 
